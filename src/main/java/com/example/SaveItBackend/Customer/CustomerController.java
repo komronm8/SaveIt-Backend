@@ -19,7 +19,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<String> getCustomers(){
+    public List<Customer> getCustomers(){
         return customerService.getCustomers();
     }
 
