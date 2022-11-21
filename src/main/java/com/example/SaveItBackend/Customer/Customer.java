@@ -43,6 +43,30 @@ public class Customer {
         this.dob = dob;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
