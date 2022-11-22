@@ -26,4 +26,17 @@ public class CustomerController {
         customerService.addNewCustomer(customer);
     }
 
+    @DeleteMapping(path = "{customerID}")
+    public void deleteCustomer(@PathVariable("customerID") Long customerId){
+        customerService.deleteCustomer(customerId);
+    }
+
+    @PutMapping(path = "{customerID}")
+    public void updateCustomer(
+            @PathVariable("customerID") Long customerId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email){
+        customerService.updateCustomer(customerId, name, email);
+    }
+
 }
