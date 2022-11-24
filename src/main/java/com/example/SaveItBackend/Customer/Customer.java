@@ -1,10 +1,15 @@
 package com.example.SaveItBackend.Customer;
 
+import com.example.SaveItBackend.Order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "customers")
 public class Customer {
 
     @Id
@@ -22,8 +27,12 @@ public class Customer {
     private Long number;
     private String email;
     private String password;
-
     private LocalDate dob;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "customer_id")
+    private Set<Order> orders;
 
     public Customer(){}
     public Customer(Long id, String name, Long number, String email, String password, LocalDate dob) {
@@ -89,6 +98,14 @@ public class Customer {
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +23,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public Customer getCustomer(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new IllegalStateException("Customer does not exist"));
+    }
 
     public void addNewCustomer(Customer customer) {
         Optional<Customer> customerOptional = customerRepository.

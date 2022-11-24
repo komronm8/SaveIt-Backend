@@ -11,7 +11,7 @@ import java.util.List;
 public class CustomerConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomerRepository repository){
+    CommandLineRunner customerCommandLineRunner(CustomerRepository repository){
         return args -> {
             Customer Mike = new Customer(
                     "Mike",
