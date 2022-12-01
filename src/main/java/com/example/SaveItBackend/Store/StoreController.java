@@ -41,7 +41,7 @@ public class StoreController {
                 .contentLength(resource.contentLength())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment()
-                                .filename("whatever")
+                                .filename("logoImage.jpg")
                                 .build().toString())
                 .body(resource);
     }
