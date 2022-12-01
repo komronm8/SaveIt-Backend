@@ -1,7 +1,6 @@
 package com.example.SaveItBackend.Store;
 
 import com.example.SaveItBackend.Order.Order;
-import com.example.SaveItBackend.Tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -33,6 +32,7 @@ public class Store {
     private LocalTime collectionTimeStart;
     private LocalTime collectionTimeEnd;
     private Integer boxesAmount;
+    private String tags;
     @JsonIgnore
     @Column(columnDefinition="TEXT")
     private String description;
@@ -42,23 +42,20 @@ public class Store {
     private byte[] logoImage;
 
     @JsonIgnore
+    @Lob
+    private byte[] coverImage;
+
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "store_id")
     private Set<Order> orders;
-
-    @ManyToMany
-    @JoinTable(
-            name = "store_tags",
-            joinColumns = @JoinColumn(name = "store_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private Set<Tag> currentTags;
 
     public Store() {
     }
 
     public Store(Long id, String name, String email, String address, String addressURL, Double price,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description, byte[] logoImage) {
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description,
+                 String tags, byte[] logoImage, byte[] coverImage) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -69,11 +66,14 @@ public class Store {
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
         this.description = description;
+        this.tags = tags;
         this.logoImage = logoImage;
+        this.coverImage = coverImage;
     }
 
     public Store(String name, String email, String address, String addressURL, Double price,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description, byte[] logoImage) {
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description,
+                 String tags, byte[] logoImage, byte[] coverImage) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -83,7 +83,9 @@ public class Store {
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
         this.description = description;
+        this.tags = tags;
         this.logoImage = logoImage;
+        this.coverImage = coverImage;
     }
 
     public Long getId() {
@@ -174,20 +176,28 @@ public class Store {
         this.description = description;
     }
 
-    public Set<Tag> getCurrentTags() {
-        return currentTags;
-    }
-
-    public void setCurrentTags(Set<Tag> currentTags) {
-        this.currentTags = currentTags;
-    }
-
     public byte[] getLogoImage() {
         return logoImage;
     }
 
     public void setLogoImage(byte[] logoImage) {
         this.logoImage = logoImage;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public byte[] getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(byte[] coverImage) {
+        this.coverImage = coverImage;
     }
 
     @Override

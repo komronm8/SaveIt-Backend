@@ -39,7 +39,9 @@ public class StoreConfig {
                     LocalTime.of(21, 30),
                     LocalTime.of(23, 45),
                     23,
-                    "Seattle-based coffeehouse chain known for its signature roasts, light bites and WiFi availability. But among these early practitioners there was one exception, a genius of vast intellect and prodigious memory who came to be known as the Invoker. In his youth, the precocious wizard mastered not four, not five, not even seven incantations: He could command no fewer than ten spells, and cast them instantly. Many more he learned but found useless, and would practice once then purge from his mind forever, to make room for more practical invocations. One such spell was the Sempiternal Cantrap—a longevity spell of such power that those who cast it in the world's first days are among us still (unless they have been crushed to atoms).\n",
+                    "Seattle-based coffeehouse chain known for its signature roasts, light bites and WiFi availability.",
+                    "Bakery, Grocery, Meal",
+                    imageData("https://www.bundesverband-systemgastronomie.de/files/public/start/Logo_Banner/Starbucks.jpg"),
                     imageData("https://www.bundesverband-systemgastronomie.de/files/public/start/Logo_Banner/Starbucks.jpg")
             );
 
