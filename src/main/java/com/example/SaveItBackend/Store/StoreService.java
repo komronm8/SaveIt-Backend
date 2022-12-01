@@ -27,7 +27,6 @@ public class StoreService {
         return storeRepository.findById(store_id).get().getLogoImage();
     }
 
-
     public void addNewStore(Store store) {
         Optional<Store> storeOptional = storeRepository.
                 findStoreByEmail(store.getEmail());
@@ -64,4 +63,8 @@ public class StoreService {
 
     }
 
+    public Store getStore(Long store_id) {
+        return storeRepository.findById(store_id)
+                .orElseThrow(() -> new IllegalStateException("Store does not exist"));
+    }
 }

@@ -27,6 +27,17 @@ public class OrderController {
         return orderService.getOrders();
     }
 
+    @GetMapping(path = "{order_id}")
+    public Order getOrder(@PathVariable("order_id") Long order_id){
+        return orderService.getOrder(order_id);
+    }
+
+    @GetMapping(path = "customer/{customer_id}")
+    public List<Order> getCustomerOrders(
+            @PathVariable("customer_id") Long customer_id
+    ){
+        return orderService.getCustomerOrders(customer_id);
+    }
     //TODO Add getMapping for a specific customer, to see the orders that he has
 
     @PostMapping

@@ -50,4 +50,8 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    @Transactional
+    public List<Order> getCustomerOrders(Long customer_id) {
+        return orderRepository.findCustomerOrders(customer_id);
+    }
 }

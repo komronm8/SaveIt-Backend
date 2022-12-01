@@ -32,6 +32,11 @@ public class StoreController {
         return storeService.getStores();
     }
 
+    @GetMapping(path = "{store_id}")
+    public Store getStore(@PathVariable("store_id") Long store_id){
+        return storeService.getStore(store_id);
+    }
+
     @GetMapping(path = "{store_id}/logoImage")
     public ResponseEntity<Resource> getLogoImage(@PathVariable("store_id") Long store_id) throws IOException {
         byte[] data = storeService.getLogoImage(store_id);

@@ -29,8 +29,16 @@ public class CustomerConfig {
                     LocalDate.of(2000, 12, 12)
             );
 
+            Customer Invoker = new Customer(
+                    "Invoker",
+                    491345728453L,
+                    "sigmaMale@gmail.com",
+                    "qvasWexExort",
+                    LocalDate.of(1090, 3, 23)
+            );
+
             repository.saveAll(
-                    List.of(Mike, Alex)
+                    List.of(Mike, Alex, Invoker)
             );
 
         };
