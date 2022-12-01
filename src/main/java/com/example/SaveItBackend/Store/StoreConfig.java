@@ -33,21 +33,77 @@ public class StoreConfig {
             Store Starbucks = new Store(
                     "Starbucks",
                     "info@starbucks.com",
-                    "Thier Galerie, Westenhellweg 102-106",
-                    "https://www.google.com/maps/place/Starbucks/@51.5140214,7.458997,15z/data=!4m5!3m4!1s0x0:0x518690fb56f0bbca!8m2!3d51.5140214!4d7.458997",
-                    1500.7,
-                    LocalTime.of(21, 30),
+                    "проспект Aль-Фараби 77",
+                    "https://goo.gl/maps/hB1Mhc5mvyyyNbhGA",
+                    2000.0,
+                    LocalTime.of(23, 30),
                     LocalTime.of(23, 45),
                     23,
                     "Seattle-based coffeehouse chain known for its signature roasts, light bites and WiFi availability.",
                     "Bakery, Grocery, Meal",
-                    imageData("https://www.bundesverband-systemgastronomie.de/files/public/start/Logo_Banner/Starbucks.jpg"),
-                    imageData("https://www.bundesverband-systemgastronomie.de/files/public/start/Logo_Banner/Starbucks.jpg")
+                    imageData("https://upload.wikimedia.org/wikipedia/de/thumb/8/8d/Starbucks_Logo_ab_2011.svg/1200px-Starbucks_Logo_ab_2011.svg.png"),
+                    imageData("https://images.unsplash.com/photo-1503481766315-7a586b20f66d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2053&q=80")
+            );
+            Store Coffeeboom = new Store(
+                    "Coffeeboom",
+                    "info@coffeeboom.com",
+                    "проспект Aль-Фараби 140а/3",
+                    "https://goo.gl/maps/BEa4kQZNSMuAshWB8",
+                    1500.0,
+                    LocalTime.of(21, 30),
+                    LocalTime.of(22, 00),
+                    5,
+                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione odit eum minus amet molestiae animi aliquid quisquam iusto harum dolorum qui repellendus laborum cupiditate, voluptatem magni modi perspiciatis a libero doloremque quam ab! Asperiores voluptatum, quaerat cumque nulla quod accusantium.",
+                    "Bakery, Meal",
+                    imageData("https://coffeeboom.kz/storage/app/uploads/public/5f7/e76/7e1/5f7e767e17f3d169479667.png"),
+                    imageData("https://images.unsplash.com/photo-1623334044303-241021148842?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80")
+            );
+            Store LaTartine = new Store(
+                    "La Tartine",
+                    "info@la_tartine.com",
+                    "ул. Розыбакиева, 263",
+                    "https://goo.gl/maps/GT48kmETmFGzgRmN6",
+                    2000.0,
+                    LocalTime.of(20, 30),
+                    LocalTime.of(21, 00),
+                    3,
+                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione odit eum minus amet molestiae animi aliquid quisquam iusto harum dolorum qui repellendus laborum cupiditate, voluptatem magni modi perspiciatis a libero doloremque quam ab! Asperiores voluptatum, quaerat cumque nulla quod accusantium.",
+                    "Bakery, Meal",
+                    imageData("https://www.latartine.kz/assets/images/promo.jpg"),
+                    imageData("https://images.unsplash.com/photo-1569864358642-9d1684040f43?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80")
+            );
+            Store Paul = new Store(
+                    "Paul",
+                    "info@paul.com",
+                    "проспект Aль-Фараби 77",
+                    "https://goo.gl/maps/7kk6Z26w6dxhoUpCA",
+                    1500.0,
+                    LocalTime.of(21, 45),
+                    LocalTime.of(22, 00),
+                    1,
+                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione odit eum minus amet molestiae animi aliquid quisquam iusto harum dolorum qui repellendus laborum cupiditate, voluptatem magni modi perspiciatis a libero doloremque quam ab! Asperiores voluptatum, quaerat cumque nulla quod accusantium.",
+                    "Bakery",
+                    imageData("https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Paul.png"),
+                    imageData("https://images.unsplash.com/photo-1568254183919-78a4f43a2877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80")
+            );
+            Store Costa = new Store(
+                    "Costa Coffee",
+                    "info@costa.com",
+                    "проспект Aль-Фараби 140",
+                    "https://goo.gl/maps/gCmBKA7sHQEd4rqQ7",
+                    1500.0,
+                    LocalTime.of(22, 45),
+                    LocalTime.of(23, 00),
+                    1,
+                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione odit eum minus amet molestiae animi aliquid quisquam iusto harum dolorum qui repellendus laborum cupiditate, voluptatem magni modi perspiciatis a libero doloremque quam ab! Asperiores voluptatum, quaerat cumque nulla quod accusantium.",
+                    "Bakery",
+                    imageData("https://upload.wikimedia.org/wikipedia/de/thumb/5/52/Costa_Coffee.svg/1200px-Costa_Coffee.svg.png"),
+                    imageData("https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1661&q=80")
             );
 
 
             repository.saveAll(
-                    List.of(Starbucks)
+                    List.of(Starbucks,Coffeeboom,LaTartine,Paul,Costa)
             );
 
         };
