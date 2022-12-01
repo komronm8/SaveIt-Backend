@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "api/v1/order")
 public class OrderController {
@@ -26,18 +27,20 @@ public class OrderController {
         return orderService.getOrders();
     }
 
+    //TODO Add getMapping for a specific customer, to see the orders that he has
+
     @PostMapping
     public void createOrder(@RequestBody Order order){
         orderService.createOrder(order);
     }
 
-    @PutMapping(path = "/{orderID}/customer/{customerID}")
+    @PutMapping(path = "/{orderID}")
     public void assignCustomerToOrder(
             @PathVariable("orderID") Long orderId,
-            @PathVariable("customerID") Long customerId){
-        Customer customer = customerService.getCustomer(customerId);
+            @RequestParam Integer status){
         Order order = orderService.getOrder(orderId);
-        order.setCustomer(customer);
+        order.setStatus(status);
+        System.out.println(order);
     }
 
 }

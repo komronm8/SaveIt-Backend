@@ -5,6 +5,7 @@ import com.example.SaveItBackend.Store.Store;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Entity
 @Table(name = "orders")
@@ -23,9 +24,10 @@ public class Order {
 
     private Long id;
     private LocalDate orderDate;
-    private Long amount;
-    private Double price;
     private Integer status;
+    private Integer boxesAmount;
+    private Double pricePerBox;
+    private Double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -38,19 +40,22 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, LocalDate orderDate, Long amount, Double price, Integer status) {
+    public Order(Long id, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+                 Double totalPrice) {
         this.id = id;
         this.orderDate = orderDate;
-        this.amount = amount;
-        this.price = price;
         this.status = status;
+        this.boxesAmount = boxesAmount;
+        this.pricePerBox = pricePerBox;
+        this.totalPrice = totalPrice;
     }
 
-    public Order(LocalDate orderDate, Long amount, Double price, Integer status) {
+    public Order(LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox, Double totalPrice) {
         this.orderDate = orderDate;
-        this.amount = amount;
-        this.price = price;
         this.status = status;
+        this.boxesAmount = boxesAmount;
+        this.pricePerBox = pricePerBox;
+        this.totalPrice = totalPrice;
     }
 
     public Long getId() {
@@ -67,22 +72,6 @@ public class Order {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Integer getStatus() {
@@ -109,4 +98,27 @@ public class Order {
         this.store = store;
     }
 
+    public Integer getBoxesAmount() {
+        return boxesAmount;
+    }
+
+    public void setBoxesAmount(Integer boxesAmount) {
+        this.boxesAmount = boxesAmount;
+    }
+
+    public Double getPricePerBox() {
+        return pricePerBox;
+    }
+
+    public void setPricePerBox(Double pricePerBox) {
+        this.pricePerBox = pricePerBox;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.SaveItBackend.Store;
 
-import com.example.SaveItBackend.Customer.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

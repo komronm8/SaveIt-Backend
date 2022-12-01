@@ -1,6 +1,7 @@
 package com.example.SaveItBackend.Store;
 
 import com.example.SaveItBackend.Order.Order;
+import com.example.SaveItBackend.Tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -26,29 +27,63 @@ public class Store {
     private String name;
     private String email;
     private String address;
-    private LocalTime pickupTime;
+    @JsonIgnore
+    private String addressURL;
+    private Double price;
+    private LocalTime collectionTimeStart;
+    private LocalTime collectionTimeEnd;
+    private Integer boxesAmount;
+    @JsonIgnore
+    @Column(columnDefinition="TEXT")
+    private String description;
+
+    @JsonIgnore
+    @Lob
+    private byte[] logoImage;
 
     @JsonIgnore
     @OneToMany
     @JoinColumn(name = "store_id")
     private Set<Order> orders;
 
+    @ManyToMany
+    @JoinTable(
+            name = "store_tags",
+            joinColumns = @JoinColumn(name = "store_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> currentTags;
+
     public Store() {
     }
 
-    public Store(Long id, String name, String email, String address, LocalTime pickupTime) {
+    public Store(Long id, String name, String email, String address, String addressURL, Double price,
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description, byte[] logoImage) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
-        this.pickupTime = pickupTime;
+        this.addressURL = addressURL;
+        this.price = price;
+        this.collectionTimeStart = collectionTimeStart;
+        this.collectionTimeEnd = collectionTimeEnd;
+        this.boxesAmount = boxesAmount;
+        this.description = description;
+        this.logoImage = logoImage;
     }
 
-    public Store(String name, String email, String address, LocalTime pickupTime) {
+    public Store(String name, String email, String address, String addressURL, Double price,
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description, byte[] logoImage) {
         this.name = name;
         this.email = email;
         this.address = address;
-        this.pickupTime = pickupTime;
+        this.addressURL = addressURL;
+        this.price = price;
+        this.collectionTimeStart = collectionTimeStart;
+        this.collectionTimeEnd = collectionTimeEnd;
+        this.boxesAmount = boxesAmount;
+        this.description = description;
+        this.logoImage = logoImage;
     }
 
     public Long getId() {
@@ -83,20 +118,76 @@ public class Store {
         this.address = address;
     }
 
-    public LocalTime getPickupTime() {
-        return pickupTime;
-    }
-
-    public void setPickupTime(LocalTime pickupTime) {
-        this.pickupTime = pickupTime;
-    }
-
     public Set<Order> getOrders() {
         return orders;
     }
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public String getAddressURL() {
+        return addressURL;
+    }
+
+    public void setAddressURL(String addressURL) {
+        this.addressURL = addressURL;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public LocalTime getCollectionTimeStart() {
+        return collectionTimeStart;
+    }
+
+    public void setCollectionTimeStart(LocalTime collectionTimeStart) {
+        this.collectionTimeStart = collectionTimeStart;
+    }
+
+    public LocalTime getCollectionTimeEnd() {
+        return collectionTimeEnd;
+    }
+
+    public void setCollectionTimeEnd(LocalTime collectionTimeEnd) {
+        this.collectionTimeEnd = collectionTimeEnd;
+    }
+
+    public Integer getBoxesAmount() {
+        return boxesAmount;
+    }
+
+    public void setBoxesAmount(Integer boxesAmount) {
+        this.boxesAmount = boxesAmount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Tag> getCurrentTags() {
+        return currentTags;
+    }
+
+    public void setCurrentTags(Set<Tag> currentTags) {
+        this.currentTags = currentTags;
+    }
+
+    public byte[] getLogoImage() {
+        return logoImage;
+    }
+
+    public void setLogoImage(byte[] logoImage) {
+        this.logoImage = logoImage;
     }
 
     @Override

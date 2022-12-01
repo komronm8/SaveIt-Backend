@@ -16,17 +16,19 @@ public class OrderConfig {
         return args -> {
             Order first = new Order(
                     LocalDate.of(2023, 12, 1),
-                    40L,
-                    30.40,
-                    0
+                    0,
+                    4,
+                    30.0,
+                    120.0
             );
 
 
             Order second = new Order(
                     LocalDate.of(2023, 4, 23),
-                    10L,
-                    4.80,
-                    1
+                    1,
+                    8,
+                    3.2,
+                    22.6
             );
 
 //            repository.saveAll(
