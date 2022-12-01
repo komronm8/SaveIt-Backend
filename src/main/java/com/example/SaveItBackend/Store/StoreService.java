@@ -1,5 +1,6 @@
 package com.example.SaveItBackend.Store;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,10 @@ public class StoreService {
 
     public List<Store> getStores(){
         return storeRepository.findAll();
+    }
+
+    public byte[] getLogoImage(Long store_id){
+        return storeRepository.findById(store_id).get().getLogoImage();
     }
 
 

@@ -37,7 +37,6 @@ public class Store {
     @Column(columnDefinition="TEXT")
     private String description;
 
-    @JsonIgnore
     @Lob
     private byte[] logoImage;
 
