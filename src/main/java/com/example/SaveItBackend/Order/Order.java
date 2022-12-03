@@ -23,6 +23,7 @@ public class Order {
     )
 
     private Long id;
+    private String orderNumber;
     private LocalDate orderDate;
     private Integer status;
     private Integer boxesAmount;
@@ -41,9 +42,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(Long id, String orderNumber, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
         this.id = id;
+        this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.status = status;
         this.boxesAmount = boxesAmount;
@@ -52,8 +54,9 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Order(LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(String orderNumber, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
+        this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.status = status;
         this.boxesAmount = boxesAmount;
@@ -68,6 +71,14 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public LocalDate getOrderDate() {

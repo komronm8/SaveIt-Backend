@@ -1,5 +1,6 @@
 package com.example.SaveItBackend.Order;
 
+import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerRepository;
 import com.example.SaveItBackend.Store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class OrderService {
@@ -43,6 +46,7 @@ public class OrderService {
         if(!customerExists){
             throw new IllegalStateException("Customer with id " + customerId + " does not exist");
         }
+        order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now());
         order.setStatus(0);
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
@@ -55,4 +59,26 @@ public class OrderService {
     public List<Order> getCustomerOrders(Long customer_id) {
         return orderRepository.findCustomerOrders(customer_id);
     }
+
+    private String getOrderNumber(){
+        String sample = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        while(true){
+            String orderNumber = createOrderNumber(sample);
+            Optional<Order> orderOptional = orderRepository.findOrderByOrderNumber(orderNumber);
+            if(orderOptional.isEmpty()){
+                return orderNumber;
+            }
+        }
+    }
+
+    private String createOrderNumber(String sample){
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < 5; i++){
+            Random random = new Random();
+            int index = random.nextInt(sample.length());
+            result.append(sample.charAt(index));
+        }
+        return result.toString();
+    }
+
 }
