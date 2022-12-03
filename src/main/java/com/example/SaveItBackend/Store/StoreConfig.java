@@ -18,7 +18,7 @@ public class StoreConfig {
     public byte[] imageData(String imageURL) throws IOException {
         BufferedImage bImage = ImageIO.read(new URL(imageURL));
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write( bImage, "jpg", bos);
+        ImageIO.write( bImage, "png", bos);
         return bos.toByteArray();
     }
 
@@ -39,7 +39,7 @@ public class StoreConfig {
                     23,
                     "Bakery, Grocery, Meal",
                     "Seattle-based coffeehouse chain known for its signature roasts, light bites and WiFi availability.",
-                    imageData("https://upload.wikimedia.org/wikipedia/de/thumb/8/8d/Starbucks_Logo_ab_2011.svg/1200px-Starbucks_Logo_ab_2011.svg.png"),
+                    imageData("https://www.bundesverband-systemgastronomie.de/files/public/start/Logo_Banner/Starbucks.jpg"),
                     imageData("https://images.unsplash.com/photo-1503481766315-7a586b20f66d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2053&q=80")
             );
             Store Coffeeboom = new Store(

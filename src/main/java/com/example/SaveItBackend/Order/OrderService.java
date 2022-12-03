@@ -81,4 +81,10 @@ public class OrderService {
         return result.toString();
     }
 
+    @Transactional
+    public void changeStatus(Long orderId, Integer status) {
+        Order order = orderRepository.getReferenceById(orderId);
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
 }

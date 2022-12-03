@@ -46,7 +46,7 @@ public class StoreController {
                 .contentLength(resource.contentLength())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment()
-                                .filename("logoImage.jpg")
+                                .filename("logoImage.png")
                                 .build().toString())
                 .body(resource);
     }
@@ -60,7 +60,7 @@ public class StoreController {
                 .contentLength(resource.contentLength())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment()
-                                .filename("coverImage.jpg")
+                                .filename("coverImage.png")
                                 .build().toString())
                 .body(resource);
     }

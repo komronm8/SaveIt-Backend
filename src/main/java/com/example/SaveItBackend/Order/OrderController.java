@@ -48,9 +48,7 @@ public class OrderController {
     public void assignCustomerToOrder(
             @PathVariable("orderID") Long orderId,
             @RequestParam Integer status){
-        Order order = orderService.getOrder(orderId);
-        order.setStatus(status);
-        System.out.println(order);
+        orderService.changeStatus(orderId, status);
     }
 
 }
