@@ -33,7 +33,6 @@ public class Store {
     private LocalTime collectionTimeEnd;
     private Integer boxesAmount;
     private String tags;
-    @JsonIgnore
     @Column(columnDefinition="TEXT")
     private String description;
 
