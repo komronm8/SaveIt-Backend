@@ -38,7 +38,6 @@ public class OrderController {
     ){
         return orderService.getCustomerOrders(customer_id);
     }
-    //TODO Add getMapping for a specific customer, to see the orders that he has
 
     @PostMapping
     public void createOrder(@RequestBody Order order){

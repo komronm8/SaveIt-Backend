@@ -27,6 +27,7 @@ public class Order {
     private Integer status;
     private Integer boxesAmount;
     private Double pricePerBox;
+    private Double priceWithoutDiscount;
     private Double totalPrice;
 
     @ManyToOne
@@ -41,20 +42,23 @@ public class Order {
     }
 
     public Order(Long id, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
-                 Double totalPrice) {
+                 Double priceWithoutDiscount, Double totalPrice) {
         this.id = id;
         this.orderDate = orderDate;
         this.status = status;
         this.boxesAmount = boxesAmount;
         this.pricePerBox = pricePerBox;
+        this.priceWithoutDiscount = priceWithoutDiscount;
         this.totalPrice = totalPrice;
     }
 
-    public Order(LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox, Double totalPrice) {
+    public Order(LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+                 Double priceWithoutDiscount, Double totalPrice) {
         this.orderDate = orderDate;
         this.status = status;
         this.boxesAmount = boxesAmount;
         this.pricePerBox = pricePerBox;
+        this.priceWithoutDiscount = priceWithoutDiscount;
         this.totalPrice = totalPrice;
     }
 
@@ -120,5 +124,13 @@ public class Order {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Double getPriceWithoutDiscount() {
+        return priceWithoutDiscount;
+    }
+
+    public void setPriceWithoutDiscount(Double priceWithoutDiscount) {
+        this.priceWithoutDiscount = priceWithoutDiscount;
     }
 }

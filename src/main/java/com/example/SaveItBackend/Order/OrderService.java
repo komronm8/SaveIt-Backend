@@ -47,6 +47,7 @@ public class OrderService {
         order.setStatus(0);
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
         order.setTotalPrice(order.getPricePerBox()*order.getBoxesAmount());
+        order.setPriceWithoutDiscount(storeRepository.getReferenceById(storeId).getPriceWithoutDiscount()*order.getBoxesAmount());
         orderRepository.save(order);
     }
 

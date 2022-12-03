@@ -26,9 +26,9 @@ public class Store {
     private String name;
     private String email;
     private String address;
-    @JsonIgnore
     private String addressURL;
     private Double price;
+    private Double priceWithoutDiscount;
     private LocalTime collectionTimeStart;
     private LocalTime collectionTimeEnd;
     private Integer boxesAmount;
@@ -54,36 +54,38 @@ public class Store {
     }
 
     public Store(Long id, String name, String email, String address, String addressURL, Double price,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description,
-                 String tags, byte[] logoImage, byte[] coverImage) {
+                 Double priceWithoutDiscount, LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount,
+                 String tags, String description, byte[] logoImage, byte[] coverImage) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
         this.addressURL = addressURL;
         this.price = price;
+        this.priceWithoutDiscount = priceWithoutDiscount;
         this.collectionTimeStart = collectionTimeStart;
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
-        this.description = description;
         this.tags = tags;
+        this.description = description;
         this.logoImage = logoImage;
         this.coverImage = coverImage;
     }
 
-    public Store(String name, String email, String address, String addressURL, Double price,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String description,
-                 String tags, byte[] logoImage, byte[] coverImage) {
+    public Store(String name, String email, String address, String addressURL, Double price, Double priceWithoutDiscount,
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String tags,
+                 String description, byte[] logoImage, byte[] coverImage) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.addressURL = addressURL;
         this.price = price;
+        this.priceWithoutDiscount = priceWithoutDiscount;
         this.collectionTimeStart = collectionTimeStart;
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
-        this.description = description;
         this.tags = tags;
+        this.description = description;
         this.logoImage = logoImage;
         this.coverImage = coverImage;
     }
@@ -198,6 +200,14 @@ public class Store {
 
     public void setCoverImage(byte[] coverImage) {
         this.coverImage = coverImage;
+    }
+
+    public Double getPriceWithoutDiscount() {
+        return priceWithoutDiscount;
+    }
+
+    public void setPriceWithoutDiscount(Double priceWithoutDiscount) {
+        this.priceWithoutDiscount = priceWithoutDiscount;
     }
 
     @Override
