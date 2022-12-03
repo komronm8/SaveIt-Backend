@@ -51,6 +51,20 @@ public class StoreController {
                 .body(resource);
     }
 
+    @GetMapping(path = "{store_id}/coverImage")
+    public ResponseEntity<Resource> getCoverImage(@PathVariable("store_id") Long store_id) throws IOException {
+        byte[] data = storeService.getCoverImage(store_id);
+        ByteArrayResource resource = new ByteArrayResource(data);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename("coverImage.jpg")
+                                .build().toString())
+                .body(resource);
+    }
+
     @PostMapping
     public void registerStore(@RequestBody Store store){
         storeService.addNewStore(store);

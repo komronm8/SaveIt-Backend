@@ -27,6 +27,8 @@ public class StoreService {
         return storeRepository.findById(store_id).get().getLogoImage();
     }
 
+    public byte[] getCoverImage(Long store_id){ return storeRepository.findById(store_id).get().getCoverImage();}
+
     public void addNewStore(Store store) {
         Optional<Store> storeOptional = storeRepository.
                 findStoreByEmail(store.getEmail());
