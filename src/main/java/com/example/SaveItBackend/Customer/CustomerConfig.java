@@ -17,7 +17,7 @@ public class CustomerConfig {
                     "Mike",
                     49695267583L,
                     "Mike@gmail.com",
-                    "ExamplePassword123",
+                    "aab2a68fcf5278315da3a66d8dd803e32e1190d8e7ae8d421d874ae018935cf9",
                     LocalDate.of(2002, 1, 12)
             );
 
@@ -25,7 +25,7 @@ public class CustomerConfig {
                     "Alex",
                     496345267583L,
                     "Alex@gmail.com",
-                    "ExamplePassword456",
+                    "42c81568824258f7f6216337be7d381de744461dd58dad9c67ad20e58e57b729",
                     LocalDate.of(2000, 12, 12)
             );
 
@@ -33,7 +33,7 @@ public class CustomerConfig {
                     "Invoker",
                     491345728453L,
                     "sigmaMale@gmail.com",
-                    "qvasWexExort",
+                    "8fc4d17c104401ed4b8eaab91cb7d2f8ad342bb2bb5216f7ba86ef22d265b107",
                     LocalDate.of(1090, 3, 23)
             );
 

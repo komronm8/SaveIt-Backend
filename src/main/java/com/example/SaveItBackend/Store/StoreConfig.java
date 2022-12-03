@@ -1,6 +1,5 @@
 package com.example.SaveItBackend.Store;
 
-import com.example.SaveItBackend.Order.Order;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 

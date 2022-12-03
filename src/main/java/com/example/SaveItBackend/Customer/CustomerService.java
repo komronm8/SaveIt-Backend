@@ -1,5 +1,6 @@
 package com.example.SaveItBackend.Customer;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class CustomerService {
         if(customerOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
+        customer.setPassword(hashPassword(customer.getPassword()));
         customerRepository.save(customer);
     }
 
@@ -64,6 +66,10 @@ public class CustomerService {
             }
             customer.setEmail(email);
         }
+    }
+
+    public String hashPassword(String password){
+        return DigestUtils.sha256Hex(password);
     }
 
 }
