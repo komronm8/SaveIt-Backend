@@ -61,7 +61,7 @@ public class OrderService {
     }
 
     private String getOrderNumber(){
-        String sample = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String sample = "0A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6";
         while(true){
             String orderNumber = createOrderNumber(sample);
             Optional<Order> orderOptional = orderRepository.findOrderByOrderNumber(orderNumber);
@@ -85,6 +85,5 @@ public class OrderService {
     public void changeStatus(Long orderId, Integer status) {
         Order order = orderRepository.getReferenceById(orderId);
         order.setStatus(status);
-        orderRepository.save(order);
     }
 }
