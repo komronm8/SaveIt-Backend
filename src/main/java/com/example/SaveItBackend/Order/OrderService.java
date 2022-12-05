@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -46,13 +48,28 @@ public class OrderService {
         if(!customerExists){
             throw new IllegalStateException("Customer with id " + customerId + " does not exist");
         }
+        if(LocalTime.now().isAfter(storeRepository.getReferenceById(storeId).getCollectionTimeStart())){
+            throw new IllegalStateException("Order cannot be created after the collection time has started");
+        }
         order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now());
         order.setStatus(0);
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
         order.setTotalPrice(order.getPricePerBox()*order.getBoxesAmount());
         order.setPriceWithoutDiscount(storeRepository.getReferenceById(storeId).getPriceWithoutDiscount()*order.getBoxesAmount());
+        order.setOrderTime(LocalTime.now());
         orderRepository.save(order);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask(){
+                    @Override
+                    public void run(){
+                        order.setStatus(2);
+                        orderRepository.save(order);
+                    }
+                },
+                Duration.between(order.getOrderTime(), storeRepository.getReferenceById(storeId).getCollectionTimeEnd())
+                        .toMillis()
+        );
     }
 
     @Transactional

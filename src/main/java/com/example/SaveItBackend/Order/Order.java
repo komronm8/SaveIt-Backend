@@ -5,7 +5,8 @@ import com.example.SaveItBackend.Store.Store;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "orders")
@@ -25,6 +26,7 @@ public class Order {
     private Long id;
     private String orderNumber;
     private LocalDate orderDate;
+    private LocalTime orderTime;
     private Integer status;
     private Integer boxesAmount;
     private Double pricePerBox;
@@ -42,11 +44,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, String orderNumber, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(Long id, String orderNumber, LocalDate orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
+        this.orderTime = orderTime;
         this.status = status;
         this.boxesAmount = boxesAmount;
         this.pricePerBox = pricePerBox;
@@ -54,10 +57,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Order(String orderNumber, LocalDate orderDate, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(String orderNumber, LocalDate orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
+        this.orderTime = orderTime;
         this.status = status;
         this.boxesAmount = boxesAmount;
         this.pricePerBox = pricePerBox;
@@ -87,6 +91,14 @@ public class Order {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public LocalTime getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(LocalTime orderTime) {
+        this.orderTime = orderTime;
     }
 
     public Integer getStatus() {
