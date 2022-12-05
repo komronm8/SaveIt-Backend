@@ -3,6 +3,8 @@ package com.example.SaveItBackend.Order;
 import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,15 +42,17 @@ public class OrderController {
     }
 
     @PostMapping
-    public void createOrder(@RequestBody Order order){
+    public Order createOrder(@RequestBody Order order){
         orderService.createOrder(order);
+        return orderService.getOrder(order.getId());
     }
 
     @PutMapping(path = "/{orderID}")
-    public void assignCustomerToOrder(
+    public Order assignCustomerToOrder(
             @PathVariable("orderID") Long orderId,
             @RequestParam Integer status){
         orderService.changeStatus(orderId, status);
+        return orderService.getOrder(orderId);
     }
 
 }
