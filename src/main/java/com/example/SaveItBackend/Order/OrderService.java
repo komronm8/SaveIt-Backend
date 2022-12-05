@@ -100,7 +100,8 @@ public class OrderService {
 
     @Transactional
     public void changeStatus(Long orderId, Integer status) {
-        Order order = orderRepository.getReferenceById(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalStateException("Order does not exist"));
         order.setStatus(status);
     }
 }

@@ -42,17 +42,17 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order){
+    public ResponseEntity<Order> createOrder(@RequestBody Order order){
         orderService.createOrder(order);
-        return orderService.getOrder(order.getId());
+        return new ResponseEntity<>(orderService.getOrder(order.getId()), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{orderID}")
-    public Order assignCustomerToOrder(
+    @PutMapping(path = "{orderID}")
+    public ResponseEntity<Order> changeOrderStatus(
             @PathVariable("orderID") Long orderId,
-            @RequestParam Integer status){
+            @RequestParam(required = false) Integer status){
         orderService.changeStatus(orderId, status);
-        return orderService.getOrder(orderId);
+        return new ResponseEntity<>(orderService.getOrder(orderId), HttpStatus.OK);
     }
 
 }
