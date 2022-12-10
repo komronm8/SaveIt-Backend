@@ -1,6 +1,5 @@
 package com.example.SaveItBackend.Order;
 
-import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
