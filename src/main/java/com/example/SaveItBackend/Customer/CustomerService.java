@@ -2,22 +2,38 @@ package com.example.SaveItBackend.Customer;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class CustomerService {
+public class CustomerService implements UserDetailsService {
 
     private final CustomerRepository customerRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Customer customer = customerRepository.findCustomerByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("Customer does not exist"));
+//        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return new org.springframework.security.core.userdetails.User(
+                customer.getEmail(),
+                customer.getPassword(),
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     public List<Customer> getCustomers(){
@@ -35,7 +51,7 @@ public class CustomerService {
         if(customerOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
-        customer.setPassword(hashPassword(customer.getPassword()));
+        customer.setPassword(new BCryptPasswordEncoder().encode(customer.getPassword()));
         customerRepository.save(customer);
     }
 
@@ -71,5 +87,4 @@ public class CustomerService {
     public String hashPassword(String password){
         return DigestUtils.sha256Hex(password);
     }
-
 }
