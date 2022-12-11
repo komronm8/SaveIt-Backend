@@ -28,7 +28,7 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
-                .antMatchers("/**/auth/**", "/**/store/**")
+                .antMatchers("/**/auth/**", "/**/store/**", "/**/customer/registerCustomer")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
