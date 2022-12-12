@@ -25,6 +25,8 @@ public class Customer {
     private String name;
     private Long number;
     private String email;
+    
+    @JsonIgnore
     private String password;
     private LocalDate dob;
 

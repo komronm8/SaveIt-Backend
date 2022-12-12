@@ -44,6 +44,11 @@ public class CustomerService implements UserDetailsService {
                 .orElseThrow(() -> new IllegalStateException("Customer does not exist"));
     }
 
+    public Customer getCustomerByEmail(String email){
+        return customerRepository.findCustomerByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("Customer does not exist"));
+    }
+
     public void addNewCustomer(Customer customer) {
         Optional<Customer> customerOptional = customerRepository.
                 findCustomerByEmail(customer.getEmail());

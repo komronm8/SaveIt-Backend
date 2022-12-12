@@ -1,9 +1,12 @@
 package com.example.SaveItBackend.Customer;
 
+import com.example.SaveItBackend.Security.JwtUtils;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.net.http.HttpHeaders;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -12,19 +15,23 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
+    private final JwtUtils jwtUtils;
+
     @Autowired
-    public CustomerController(CustomerService customerService){
+    public CustomerController(CustomerService customerService, JwtUtils jwtUtils){
         this.customerService = customerService;
+        this.jwtUtils = jwtUtils;
     }
+
+//    @GetMapping
+//    public List<Customer> getCustomers(){
+//        return customerService.getCustomers();
+//    }
 
     @GetMapping
-    public List<Customer> getCustomers(){
-        return customerService.getCustomers();
-    }
-
-    @GetMapping(path = "{customerID}")
-    public Customer getCustomer(@PathVariable("customerID") Long customerId){
-        return customerService.getCustomer(customerId);
+    public Customer getCustomer(@RequestHeader("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        return customerService.getCustomerByEmail(email);
     }
 
     @PostMapping(path = "registerCustomer")

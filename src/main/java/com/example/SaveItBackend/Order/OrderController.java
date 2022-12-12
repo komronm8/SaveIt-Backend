@@ -1,6 +1,8 @@
 package com.example.SaveItBackend.Order;
 
 import com.example.SaveItBackend.Customer.CustomerService;
+import com.example.SaveItBackend.Security.JwtUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +13,14 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "api/v1/order")
+@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
     private final CustomerService customerService;
 
-    @Autowired
-    public OrderController(OrderService orderService, CustomerService customerService){
-        this.orderService = orderService;
-        this.customerService = customerService;
-    }
+    private final JwtUtils jwtUtils;
 
     @GetMapping
     public List<Order> getOrders(){
@@ -33,11 +32,13 @@ public class OrderController {
         return orderService.getOrder(order_id);
     }
 
-    @GetMapping(path = "customer/{customer_id}")
+    @GetMapping(path = "customer")
     public List<Order> getCustomerOrders(
-            @PathVariable("customer_id") Long customer_id
+            @RequestHeader("AUTHORIZATION") String authHeader
     ){
-        return orderService.getCustomerOrders(customer_id);
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        Long customerId = customerService.getCustomerByEmail(email).getId();
+        return orderService.getCustomerOrders(customerId);
     }
 
     @PostMapping
