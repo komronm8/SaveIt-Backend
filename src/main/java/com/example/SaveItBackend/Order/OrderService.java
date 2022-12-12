@@ -1,5 +1,6 @@
 package com.example.SaveItBackend.Order;
 
+import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerRepository;
 import com.example.SaveItBackend.Store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,20 +37,16 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(Order order) {
+    public void createOrder(Order order, Customer customer) {
         Long storeId = order.getStore().getId();
-        Long customerId = order.getCustomer().getId();
         boolean storeExists = storeRepository.existsById(storeId);
         if(!storeExists){
             throw new IllegalStateException("Store with id " + storeId + " does not exist");
         }
-        boolean customerExists = storeRepository.existsById(storeId);
-        if(!customerExists){
-            throw new IllegalStateException("Customer with id " + customerId + " does not exist");
-        }
         if(LocalTime.now().isAfter(storeRepository.getReferenceById(storeId).getCollectionTimeStart())){
             throw new IllegalStateException("Order cannot be created after the collection time has started");
         }
+        order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now());
         order.setStatus(0);

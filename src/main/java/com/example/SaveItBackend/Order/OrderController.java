@@ -1,5 +1,6 @@
 package com.example.SaveItBackend.Order;
 
+import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerService;
 import com.example.SaveItBackend.Security.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order){
-        orderService.createOrder(order);
+    public ResponseEntity<Order> createOrder(
+            @RequestHeader("AUTHORIZATION") String authHeader,
+            @RequestBody Order order){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        Customer customer = customerService.getCustomerByEmail(email);
+        orderService.createOrder(order, customer);
         return new ResponseEntity<>(orderService.getOrder(order.getId()), HttpStatus.OK);
     }
 
