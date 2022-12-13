@@ -2,6 +2,7 @@ package com.example.SaveItBackend.Order;
 
 import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Customer.CustomerRepository;
+import com.example.SaveItBackend.Store.Store;
 import com.example.SaveItBackend.Store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,11 @@ public class OrderService {
         if(LocalTime.now().isAfter(storeRepository.getReferenceById(storeId).getCollectionTimeStart())){
             throw new IllegalStateException("Order cannot be created after the collection time has started");
         }
+        Store store = storeRepository.findById(storeId).get();
+        if(store.getBoxesAmount() < order.getBoxesAmount()){
+            throw new IllegalStateException("Order boxes amount is more than store boxes amount");
+        }
+        store.setBoxesAmount(store.getBoxesAmount() - order.getBoxesAmount());
         order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now());
@@ -98,6 +104,9 @@ public class OrderService {
     public void changeStatus(Long orderId, Integer status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalStateException("Order does not exist"));
+        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
+            throw new IllegalStateException("Collection time has not started yet");
+        }
         order.setStatus(status);
     }
 }
