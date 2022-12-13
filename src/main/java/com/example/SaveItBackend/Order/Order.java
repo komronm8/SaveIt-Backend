@@ -4,7 +4,6 @@ import com.example.SaveItBackend.Customer.Customer;
 import com.example.SaveItBackend.Store.Store;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -24,7 +23,7 @@ public class Order {
 
     private Long id;
     private String orderNumber;
-    private LocalDate orderDate;
+    private String orderDate;
     private LocalTime orderTime;
     private Integer status;
     private Integer boxesAmount;
@@ -43,7 +42,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, String orderNumber, LocalDate orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(Long id, String orderNumber, String orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
         this.id = id;
         this.orderNumber = orderNumber;
@@ -56,7 +55,7 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Order(String orderNumber, LocalDate orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
+    public Order(String orderNumber, String orderDate, LocalTime orderTime, Integer status, Integer boxesAmount, Double pricePerBox,
                  Double priceWithoutDiscount, Double totalPrice) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
@@ -84,11 +83,11 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    public LocalDate getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 

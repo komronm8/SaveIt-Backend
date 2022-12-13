@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -54,7 +56,7 @@ public class OrderService {
         store.setBoxesAmount(store.getBoxesAmount() - order.getBoxesAmount());
         order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
-        order.setOrderDate(LocalDate.now());
+        order.setOrderDate(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
         order.setStatus(0);
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
         order.setTotalPrice(order.getPricePerBox()*order.getBoxesAmount());

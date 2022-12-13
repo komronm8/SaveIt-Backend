@@ -19,7 +19,7 @@ public class CustomerConfig {
                     49695267583L,
                     "Mike@gmail.com",
                     new BCryptPasswordEncoder().encode("moefoe"),
-                    LocalDate.of(2002, 1, 12)
+                    "13/12/2002"
             );
 
             Customer Alex = new Customer(
@@ -27,7 +27,7 @@ public class CustomerConfig {
                     496345267583L,
                     "Alex@gmail.com",
                     new BCryptPasswordEncoder().encode("klia0494"),
-                    LocalDate.of(2000, 12, 12)
+                    "4/10/2000"
             );
 
             Customer Invoker = new Customer(
@@ -35,7 +35,7 @@ public class CustomerConfig {
                     491345728453L,
                     "sigmaMale@gmail.com",
                     new BCryptPasswordEncoder().encode("examplepassword"),
-                    LocalDate.of(1090, 3, 23)
+                    "26/05/2001"
             );
 
             repository.saveAll(

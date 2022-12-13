@@ -25,9 +25,8 @@ public class Customer {
     private String name;
     private Long number;
     private String email;
-
     private String password;
-    private LocalDate dob;
+    private String dob;
 
     @JsonIgnore
     @OneToMany
@@ -35,7 +34,7 @@ public class Customer {
     private Set<Order> orders;
 
     public Customer(){}
-    public Customer(Long id, String name, Long number, String email, String password, LocalDate dob) {
+    public Customer(Long id, String name, Long number, String email, String password, String dob) {
         this.id = id;
         this.name = name;
         this.number = number;
@@ -44,7 +43,7 @@ public class Customer {
         this.dob = dob;
     }
 
-    public Customer(String name, Long number, String email, String password, LocalDate dob) {
+    public Customer(String name, Long number, String email, String password, String dob) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -72,7 +71,7 @@ public class Customer {
         return password;
     }
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
@@ -96,7 +95,7 @@ public class Customer {
         this.password = password;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
