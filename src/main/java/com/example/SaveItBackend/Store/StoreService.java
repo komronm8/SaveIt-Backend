@@ -85,22 +85,22 @@ public class StoreService {
 
     @Transactional
     public void saveLogoImage(String base64Image, String email) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(base64Image);
-        base64Image = jsonNode.get("base64Image").asText();
-        byte[] byteArray = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
         Store store = getStoreByEmail(email);
-        store.setLogoImage(byteArray);
+        store.setLogoImage(getByteArray(base64Image));
     }
 
     @Transactional
     public void saveCoverImage(String base64Image, String email) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(base64Image);
-        base64Image = jsonNode.get("base64Image").asText();
-        byte[] byteArray = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
         Store store = getStoreByEmail(email);
-        store.setCoverImage(byteArray);
+        store.setCoverImage(getByteArray(base64Image));
+    }
+
+    public byte[] getByteArray(String encodedImage) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(encodedImage);
+        encodedImage = jsonNode.get("base64Image").asText();
+        String encodeImg = encodedImage.split(",")[1];
+        return Base64.getDecoder().decode(encodeImg.getBytes(StandardCharsets.UTF_8));
     }
 
 }
