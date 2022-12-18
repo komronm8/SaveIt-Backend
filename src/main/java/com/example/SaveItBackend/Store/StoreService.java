@@ -1,9 +1,14 @@
 package com.example.SaveItBackend.Store;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -29,12 +34,14 @@ public class StoreService {
 
     public byte[] getCoverImage(Long store_id){ return storeRepository.findById(store_id).get().getCoverImage();}
 
+    @Transactional
     public void addNewStore(Store store) {
         Optional<Store> storeOptional = storeRepository.
                 findStoreByEmail(store.getEmail());
         if(storeOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
+        store.setPassword(new BCryptPasswordEncoder().encode(store.getPassword()));
         storeRepository.save(store);
     }
 
@@ -76,9 +83,24 @@ public class StoreService {
                 .orElseThrow(() -> new IllegalStateException("Store does not exist"));
     }
 
-    public void saveLogoImage(String base64Image, String email){
+    @Transactional
+    public void saveLogoImage(String base64Image, String email) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(base64Image);
+        base64Image = jsonNode.get("base64Image").asText();
+        byte[] byteArray = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
         Store store = getStoreByEmail(email);
-        store.setLogoImage(Base64.getDecoder().decode(base64Image));
+        store.setLogoImage(byteArray);
+    }
+
+    @Transactional
+    public void saveCoverImage(String base64Image, String email) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(base64Image);
+        base64Image = jsonNode.get("base64Image").asText();
+        byte[] byteArray = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
+        Store store = getStoreByEmail(email);
+        store.setCoverImage(byteArray);
     }
 
 }

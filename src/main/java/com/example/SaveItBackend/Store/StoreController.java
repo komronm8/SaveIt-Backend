@@ -2,6 +2,7 @@ package com.example.SaveItBackend.Store;
 
 
 import com.example.SaveItBackend.Security.JwtUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -45,6 +46,20 @@ public class StoreController {
         return storeService.getStoreByEmail(email);
     }
 
+    @GetMapping(path = "/{store_id}/logoImage")
+    public ResponseEntity<Resource> getLogoImage(@PathVariable("store_id") Long store_id){
+        byte[] data = storeService.getStore(store_id).getLogoImage();
+        ByteArrayResource resource = new ByteArrayResource(data);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename("logoImage.png")
+                                .build().toString())
+                .body(resource);
+    }
+
     @GetMapping(path = "/logoImage")
     public ResponseEntity<Resource> getLogoImage(@RequestHeader ("AUTHORIZATION") String authHeader){
         String email = jwtUtils.extractUserName(authHeader.substring(7));
@@ -82,10 +97,18 @@ public class StoreController {
 
     @PostMapping(path = "/uploadLogoImage")
     public void uploadLogoImage(
-            @RequestParam("AUTHORIZATION") String authHeader,
-            @RequestParam String base64Image){
+            @RequestHeader("AUTHORIZATION") String authHeader,
+            @RequestBody String base64Image) throws JsonProcessingException {
         String email = jwtUtils.extractUserName(authHeader.substring(7));
         storeService.saveLogoImage(base64Image, email);
+    }
+
+    @PostMapping(path = "/uploadCoverImage")
+    public void uploadCoverImage(
+            @RequestHeader("AUTHORIZATION") String authHeader,
+            @RequestBody String base64Image) throws JsonProcessingException {
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        storeService.saveCoverImage(base64Image, email);
     }
 
     @DeleteMapping(path = "{store_id}")
