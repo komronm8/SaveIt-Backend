@@ -75,9 +75,17 @@ public class StoreController {
                 .body(resource);
     }
 
-    @PostMapping
+    @PostMapping(path = "/registerStore")
     public void registerStore(@RequestBody Store store){
         storeService.addNewStore(store);
+    }
+
+    @PostMapping(path = "/uploadLogoImage")
+    public void uploadLogoImage(
+            @RequestParam("AUTHORIZATION") String authHeader,
+            @RequestParam String base64Image){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        storeService.saveLogoImage(base64Image, email);
     }
 
     @DeleteMapping(path = "{store_id}")

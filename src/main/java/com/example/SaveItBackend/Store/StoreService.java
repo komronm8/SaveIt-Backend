@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,6 +74,11 @@ public class StoreService {
     public Store getStoreByEmail(String email){
         return storeRepository.findStoreByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("Store does not exist"));
+    }
+
+    public void saveLogoImage(String base64Image, String email){
+        Store store = getStoreByEmail(email);
+        store.setLogoImage(Base64.getDecoder().decode(base64Image));
     }
 
 }
