@@ -33,6 +33,7 @@ public class Store {
     private LocalTime collectionTimeEnd;
     private Integer boxesAmount;
     private String tags;
+    private String password;
     @Column(columnDefinition="TEXT")
     private String description;
 
@@ -53,8 +54,8 @@ public class Store {
     }
 
     public Store(Long id, String name, String email, String address, String addressURL, Double price,
-                 Double priceWithoutDiscount, LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount,
-                 String tags, String description, byte[] logoImage, byte[] coverImage) {
+                 Double priceWithoutDiscount, LocalTime collectionTimeStart, LocalTime collectionTimeEnd,
+                 Integer boxesAmount, String tags, String password, String description, byte[] logoImage, byte[] coverImage) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -66,13 +67,14 @@ public class Store {
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
         this.tags = tags;
+        this.password = password;
         this.description = description;
         this.logoImage = logoImage;
         this.coverImage = coverImage;
     }
 
     public Store(String name, String email, String address, String addressURL, Double price, Double priceWithoutDiscount,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String tags,
+                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String tags, String password,
                  String description, byte[] logoImage, byte[] coverImage) {
         this.name = name;
         this.email = email;
@@ -84,6 +86,7 @@ public class Store {
         this.collectionTimeEnd = collectionTimeEnd;
         this.boxesAmount = boxesAmount;
         this.tags = tags;
+        this.password = password;
         this.description = description;
         this.logoImage = logoImage;
         this.coverImage = coverImage;
@@ -111,6 +114,14 @@ public class Store {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAddress() {

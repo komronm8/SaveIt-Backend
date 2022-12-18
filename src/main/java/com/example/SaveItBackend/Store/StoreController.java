@@ -1,8 +1,7 @@
 package com.example.SaveItBackend.Store;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.example.SaveItBackend.Security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -22,24 +21,34 @@ public class StoreController {
 
     private final StoreService storeService;
 
+    private final JwtUtils jwtUtils;
+
     @Autowired
-    public StoreController(StoreService storeService){
+    public StoreController(StoreService storeService, JwtUtils jwtUtils){
         this.storeService = storeService;
+        this.jwtUtils = jwtUtils;
     }
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public List<Store> getStores(){
         return storeService.getStores();
     }
 
     @GetMapping(path = "{store_id}")
-    public Store getStore(@PathVariable("store_id") Long store_id){
+    public Store getStoreWithId(@PathVariable("store_id") Long store_id){
         return storeService.getStore(store_id);
     }
 
-    @GetMapping(path = "{store_id}/logoImage")
-    public ResponseEntity<Resource> getLogoImage(@PathVariable("store_id") Long store_id) throws IOException {
-        byte[] data = storeService.getLogoImage(store_id);
+    @GetMapping
+    public Store getStoreWithJWT(@RequestHeader ("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        return storeService.getStoreByEmail(email);
+    }
+
+    @GetMapping(path = "/logoImage")
+    public ResponseEntity<Resource> getLogoImage(@RequestHeader ("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        byte[] data = storeService.getStoreByEmail(email).getLogoImage();
         ByteArrayResource resource = new ByteArrayResource(data);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -51,9 +60,10 @@ public class StoreController {
                 .body(resource);
     }
 
-    @GetMapping(path = "{store_id}/coverImage")
-    public ResponseEntity<Resource> getCoverImage(@PathVariable("store_id") Long store_id) throws IOException {
-        byte[] data = storeService.getCoverImage(store_id);
+    @GetMapping(path = "/coverImage")
+    public ResponseEntity<Resource> getCoverImage(@RequestHeader ("AUTHORIZATION") String authHeader) {
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        byte[] data = storeService.getStoreByEmail(email).getCoverImage();
         ByteArrayResource resource = new ByteArrayResource(data);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)

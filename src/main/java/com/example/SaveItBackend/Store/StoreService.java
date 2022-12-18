@@ -1,6 +1,5 @@
 package com.example.SaveItBackend.Store;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,4 +68,11 @@ public class StoreService {
         return storeRepository.findById(store_id)
                 .orElseThrow(() -> new IllegalStateException("Store does not exist"));
     }
+
+    @Transactional
+    public Store getStoreByEmail(String email){
+        return storeRepository.findStoreByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("Store does not exist"));
+    }
+
 }
