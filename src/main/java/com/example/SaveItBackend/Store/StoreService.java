@@ -79,6 +79,7 @@ public class StoreService {
         store.setLogoImage(logoImage);
         store.setCoverImage(coverImage);
         store.setPassword(password);
+        storeRepository.save(store);
     }
 
     public Store getStore(Long store_id) {
