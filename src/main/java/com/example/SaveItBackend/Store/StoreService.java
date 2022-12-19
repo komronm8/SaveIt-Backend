@@ -71,11 +71,13 @@ public class StoreService {
 
     @Transactional
     public void updateStore(Store store){
-        Store str = getStore(store.getId());
+        byte[] logoImage = store.getLogoImage();
+        byte[] coverImage = store.getCoverImage();
+        String password = store.getPassword();
         storeRepository.save(store);
-        store.setCoverImage(str.getCoverImage());
-        store.setLogoImage(str.getLogoImage());
-        store.setPassword(str.getPassword());
+        store.setLogoImage(logoImage);
+        store.setCoverImage(coverImage);
+        store.setPassword(password);
     }
 
     public Store getStore(Long store_id) {
