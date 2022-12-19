@@ -49,12 +49,14 @@ public class StoreService {
     public byte[] getCoverImage(Long store_id){ return storeRepository.findById(store_id).get().getCoverImage();}
 
     @Transactional
-    public void addNewStore(Store store) {
+    public void addNewStore(Store store, String base64LogoImage, String base64CoverImage) throws JsonProcessingException {
         Optional<Store> storeOptional = storeRepository.
                 findStoreByEmail(store.getEmail());
         if(storeOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
+        store.setLogoImage(getByteArray(base64LogoImage));
+        store.setCoverImage(getByteArray(base64CoverImage));
         store.setPassword(new BCryptPasswordEncoder().encode(store.getPassword()));
         storeRepository.save(store);
     }

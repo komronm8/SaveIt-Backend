@@ -47,6 +47,19 @@ public class StoreController {
         return storeService.getStoreByEmail(email);
     }
 
+    @PostMapping(path = "/registerStore")
+    public void registerStore(
+            @RequestPart StoreRequest request) throws JsonProcessingException {
+        storeService.addNewStore(request.getStore(), request.getBase64LogoImage(), request.getBase64CoverImage());
+    }
+
+    @PutMapping(path = "/updateStore")
+    public void updateStore(
+            @RequestHeader ("AUTHORIZATION") String authHeader,
+            @RequestBody Store store){
+
+    }
+
     @GetMapping(path = "/{store_id}/logoImage")
     public ResponseEntity<Resource> getLogoImage(@PathVariable("store_id") Long store_id){
         byte[] data = storeService.getStore(store_id).getLogoImage();
@@ -73,11 +86,6 @@ public class StoreController {
         return storeService.getResourceImage(data);
     }
 
-    @PostMapping(path = "/registerStore")
-    public void registerStore(@RequestBody Store store){
-        storeService.addNewStore(store);
-    }
-
     @PostMapping(path = "/uploadLogoImage")
     public void uploadLogoImage(
             @RequestHeader("AUTHORIZATION") String authHeader,
@@ -99,13 +107,13 @@ public class StoreController {
         storeService.deleteStore(store_id);
     }
 
-    @PutMapping(path = "{store_id}")
-    public void updateStore(
-            @PathVariable("store_id") Long store_id,
-            @RequestParam String email,
-            @RequestParam String address){
-        storeService.updateStore(store_id, email, address);
-    }
+//    @PutMapping(path = "{store_id}")
+//    public void updateStore(
+//            @PathVariable("store_id") Long store_id,
+//            @RequestParam String email,
+//            @RequestParam String address){
+//        storeService.updateStore(store_id, email, address);
+//    }
 
     @GetMapping(path = "dayHistory")
     public List<Order> getOrderDayHistory(
