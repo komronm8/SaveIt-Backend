@@ -1,6 +1,7 @@
 package com.example.SaveItBackend.Store;
 
 
+import com.example.SaveItBackend.Order.Order;
 import com.example.SaveItBackend.Security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,45 +50,27 @@ public class StoreController {
     @GetMapping(path = "/{store_id}/logoImage")
     public ResponseEntity<Resource> getLogoImage(@PathVariable("store_id") Long store_id){
         byte[] data = storeService.getStore(store_id).getLogoImage();
-        ByteArrayResource resource = new ByteArrayResource(data);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(resource.contentLength())
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        ContentDisposition.attachment()
-                                .filename("logoImage.png")
-                                .build().toString())
-                .body(resource);
+        return storeService.getResourceImage(data);
+    }
+
+    @GetMapping(path = "/{store_id}/coverImage")
+    public ResponseEntity<Resource> getCoverImage(@PathVariable("store_id") Long store_id) {
+        byte[] data = storeService.getStore(store_id).getCoverImage();
+        return storeService.getResourceImage(data);
     }
 
     @GetMapping(path = "/logoImage")
     public ResponseEntity<Resource> getLogoImage(@RequestHeader ("AUTHORIZATION") String authHeader){
         String email = jwtUtils.extractUserName(authHeader.substring(7));
         byte[] data = storeService.getStoreByEmail(email).getLogoImage();
-        ByteArrayResource resource = new ByteArrayResource(data);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(resource.contentLength())
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        ContentDisposition.attachment()
-                                .filename("logoImage.png")
-                                .build().toString())
-                .body(resource);
+        return storeService.getResourceImage(data);
     }
 
     @GetMapping(path = "/coverImage")
     public ResponseEntity<Resource> getCoverImage(@RequestHeader ("AUTHORIZATION") String authHeader) {
         String email = jwtUtils.extractUserName(authHeader.substring(7));
         byte[] data = storeService.getStoreByEmail(email).getCoverImage();
-        ByteArrayResource resource = new ByteArrayResource(data);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(resource.contentLength())
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        ContentDisposition.attachment()
-                                .filename("coverImage.png")
-                                .build().toString())
-                .body(resource);
+        return storeService.getResourceImage(data);
     }
 
     @PostMapping(path = "/registerStore")
@@ -122,6 +105,14 @@ public class StoreController {
             @RequestParam String email,
             @RequestParam String address){
         storeService.updateStore(store_id, email, address);
+    }
+
+    @GetMapping(path = "dayHistory")
+    public List<Order> getOrderDayHistory(
+            @RequestHeader("AUTHORIZATION") String authHeader,
+            @RequestParam(required = false) String date){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        return storeService.getOrderDayHistory(email, date);
     }
 
 

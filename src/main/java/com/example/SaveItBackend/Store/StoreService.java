@@ -1,14 +1,25 @@
 package com.example.SaveItBackend.Store;
 
+import com.example.SaveItBackend.Order.Order;
+import com.example.SaveItBackend.Order.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -19,9 +30,12 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
 
+    private final OrderRepository orderRepository;
+
     @Autowired
-    public StoreService(StoreRepository storeRepository) {
+    public StoreService(StoreRepository storeRepository, OrderRepository orderRepository) {
         this.storeRepository = storeRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<Store> getStores(){
@@ -103,4 +117,28 @@ public class StoreService {
         return Base64.getDecoder().decode(encodeImg.getBytes(StandardCharsets.UTF_8));
     }
 
+    public ResponseEntity<Resource> getResourceImage(byte[] data){
+        ByteArrayResource resource = new ByteArrayResource(data);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename("fileImage.png")
+                                .build().toString())
+                .body(resource);
+    }
+
+    @Transactional
+    public List<Order> getOrderDayHistory(String email, String date) {
+        Store store = getStoreByEmail(email);
+        if (date.equals("")) {
+            return orderRepository.findStoreOrders(
+                    store.getId(),
+                    LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+            );
+        } else {
+            return orderRepository.findStoreOrders(store.getId(), date);
+        }
+    }
 }

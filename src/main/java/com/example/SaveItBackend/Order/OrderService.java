@@ -106,9 +106,9 @@ public class OrderService {
     public void changeStatus(Long orderId, Integer status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalStateException("Order does not exist"));
-        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
-            throw new IllegalStateException("Collection time has not started yet");
-        }
+//        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
+//            throw new IllegalStateException("Collection time has not started yet");
+//        }
         order.setStatus(status);
     }
 }
