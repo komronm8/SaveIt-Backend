@@ -70,10 +70,11 @@ public class StoreService {
     }
 
     @Transactional
-    public void updateStore(Store store){
-        byte[] logoImage = store.getLogoImage();
-        byte[] coverImage = store.getCoverImage();
-        String password = store.getPassword();
+    public void updateStore(Store store, String email){
+        Store str = getStoreByEmail(email);
+        byte[] logoImage = str.getLogoImage();
+        byte[] coverImage = str.getCoverImage();
+        String password = str.getPassword();
         storeRepository.save(store);
         store.setLogoImage(logoImage);
         store.setCoverImage(coverImage);
