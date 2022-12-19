@@ -7,14 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -47,6 +46,16 @@ public class StoreController {
         return storeService.getStoreByEmail(email);
     }
 
+    @GetMapping(path = "/header")
+    public ResponseEntity<Map<String, Object>> getHeader(@RequestHeader ("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        Store store = storeService.getStoreByEmail(email);
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("Id", store.getId());
+        hm.put("Name", store.getName());
+        return new ResponseEntity<>(hm, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/registerStore")
     public void registerStore(
             @RequestPart StoreRequest request) throws JsonProcessingException {
@@ -73,20 +82,6 @@ public class StoreController {
         return storeService.getResourceImage(data);
     }
 
-    @GetMapping(path = "/logoImage")
-    public ResponseEntity<Resource> getLogoImage(@RequestHeader ("AUTHORIZATION") String authHeader){
-        String email = jwtUtils.extractUserName(authHeader.substring(7));
-        byte[] data = storeService.getStoreByEmail(email).getLogoImage();
-        return storeService.getResourceImage(data);
-    }
-
-    @GetMapping(path = "/coverImage")
-    public ResponseEntity<Resource> getCoverImage(@RequestHeader ("AUTHORIZATION") String authHeader) {
-        String email = jwtUtils.extractUserName(authHeader.substring(7));
-        byte[] data = storeService.getStoreByEmail(email).getCoverImage();
-        return storeService.getResourceImage(data);
-    }
-
     @PostMapping(path = "/uploadLogoImage")
     public void uploadLogoImage(
             @RequestHeader("AUTHORIZATION") String authHeader,
@@ -107,14 +102,6 @@ public class StoreController {
     public void deleteStore(@PathVariable("store_id") Long store_id){
         storeService.deleteStore(store_id);
     }
-
-//    @PutMapping(path = "{store_id}")
-//    public void updateStore(
-//            @PathVariable("store_id") Long store_id,
-//            @RequestParam String email,
-//            @RequestParam String address){
-//        storeService.updateStore(store_id, email, address);
-//    }
 
     @GetMapping(path = "dayHistory")
     public List<Order> getOrderDayHistory(
