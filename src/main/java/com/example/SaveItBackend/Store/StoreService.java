@@ -70,22 +70,9 @@ public class StoreService {
     }
 
     @Transactional
-    public void updateStore(Long store_id, String email, String address) {
-        Store store = storeRepository.findById(store_id)
-                .orElseThrow(() -> new IllegalStateException("Store does not exist"));
-
-        if(email != null && email.length() > 0 && !Objects.equals(store.getEmail(), email)){
-            Optional<Store> storeOptional = storeRepository.findStoreByEmail(email);
-            if(storeOptional.isPresent()){
-                throw new IllegalStateException("Email taken");
-            }
-            store.setEmail(email);
-        }
-
-        if(address != null && address.length() > 0 && !Objects.equals(store.getAddress(), address)){
-            store.setAddress(address);
-        }
-
+    public void updateStore(String email) {
+        Store store = getStoreByEmail(email);
+        storeRepository.save(store);
     }
 
     public Store getStore(Long store_id) {

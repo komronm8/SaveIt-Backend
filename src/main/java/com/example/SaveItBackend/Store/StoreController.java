@@ -57,7 +57,8 @@ public class StoreController {
     public void updateStore(
             @RequestHeader ("AUTHORIZATION") String authHeader,
             @RequestBody Store store){
-
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        storeService.updateStore(email);
     }
 
     @GetMapping(path = "/{store_id}/logoImage")
