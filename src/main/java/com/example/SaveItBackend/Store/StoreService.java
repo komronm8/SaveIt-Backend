@@ -70,8 +70,7 @@ public class StoreService {
     }
 
     @Transactional
-    public void updateStore(String email) {
-        Store store = getStoreByEmail(email);
+    public void updateStore(Store store){
         storeRepository.save(store);
     }
 
