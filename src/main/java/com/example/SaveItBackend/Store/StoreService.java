@@ -71,7 +71,7 @@ public class StoreService {
 
     @Transactional
     public void updateStore(Store store){
-        Store str = getStoreByEmail(store.getEmail());
+        Store str = getStore(store.getId());
         storeRepository.save(store);
         store.setCoverImage(str.getCoverImage());
         store.setLogoImage(str.getLogoImage());
