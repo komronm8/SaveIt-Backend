@@ -58,8 +58,8 @@ public class StoreController {
 
     @PostMapping(path = "/registerStore")
     public void registerStore(
-            @RequestPart StoreRequest request) throws JsonProcessingException {
-        storeService.addNewStore(request.getStore(), request.getBase64LogoImage(), request.getBase64CoverImage());
+            @RequestBody Store store){
+        storeService.addNewStore(store);
     }
 
     @PutMapping(path = "/updateStore")
