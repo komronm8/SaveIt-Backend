@@ -111,7 +111,7 @@ public class StoreConfig {
 
 
             repository.saveAll(
-                    List.of(Starbucks)
+                    List.of(Starbucks, Coffeeboom, LaTartine, Paul, Costa)
             );
 
         };
