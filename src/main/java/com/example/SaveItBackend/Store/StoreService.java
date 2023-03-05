@@ -83,6 +83,7 @@ public class StoreService {
         currentStore.setCollectionTimeStart(givenStore.getCollectionTimeStart());
         currentStore.setCollectionTimeEnd(givenStore.getCollectionTimeEnd());
         currentStore.setDefaultBoxesAmount(givenStore.getDefaultBoxesAmount());
+        currentStore.setCurrentBoxesAmount(givenStore.getCurrentBoxesAmount());
         currentStore.setTags(givenStore.getTags());
         currentStore.setDescription(givenStore.getDescription());
     }
