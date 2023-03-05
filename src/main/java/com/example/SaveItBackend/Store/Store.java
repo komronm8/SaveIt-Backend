@@ -4,7 +4,9 @@ import com.example.SaveItBackend.Order.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Set;
 
 @Entity
@@ -27,11 +29,13 @@ public class Store {
     private String email;
     private String address;
     private String addressURL;
+    private LocalDate creationDate;
     private Double price;
     private Double priceWithoutDiscount;
     private LocalTime collectionTimeStart;
     private LocalTime collectionTimeEnd;
-    private Integer boxesAmount;
+    private Integer defaultBoxesAmount;
+    private Integer currentBoxesAmount;
     private String tags;
     private String password;
     @Column(columnDefinition="TEXT")
@@ -53,19 +57,21 @@ public class Store {
     public Store() {
     }
 
-    public Store(Long id, String name, String email, String address, String addressURL, Double price,
+    public Store(Long id, String name, String email, String address, String addressURL, LocalDate creationDate, Double price,
                  Double priceWithoutDiscount, LocalTime collectionTimeStart, LocalTime collectionTimeEnd,
-                 Integer boxesAmount, String tags, String password, String description, byte[] logoImage, byte[] coverImage) {
+                 Integer defaultBoxesAmount, Integer currentBoxesAmount, String tags, String password, String description, byte[] logoImage, byte[] coverImage) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
         this.addressURL = addressURL;
+        this.creationDate = creationDate;
         this.price = price;
         this.priceWithoutDiscount = priceWithoutDiscount;
         this.collectionTimeStart = collectionTimeStart;
         this.collectionTimeEnd = collectionTimeEnd;
-        this.boxesAmount = boxesAmount;
+        this.defaultBoxesAmount = defaultBoxesAmount;
+        this.currentBoxesAmount = currentBoxesAmount;
         this.tags = tags;
         this.password = password;
         this.description = description;
@@ -73,18 +79,21 @@ public class Store {
         this.coverImage = coverImage;
     }
 
-    public Store(String name, String email, String address, String addressURL, Double price, Double priceWithoutDiscount,
-                 LocalTime collectionTimeStart, LocalTime collectionTimeEnd, Integer boxesAmount, String tags, String password,
+    public Store(String name, String email, String address, String addressURL, LocalDate creationDate, Double price,
+                 Double priceWithoutDiscount, LocalTime collectionTimeStart, LocalTime collectionTimeEnd,
+                 Integer defaultBoxesAmount, Integer currentBoxesAmount, String tags, String password,
                  String description, byte[] logoImage, byte[] coverImage) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.addressURL = addressURL;
+        this.creationDate = creationDate;
         this.price = price;
         this.priceWithoutDiscount = priceWithoutDiscount;
         this.collectionTimeStart = collectionTimeStart;
         this.collectionTimeEnd = collectionTimeEnd;
-        this.boxesAmount = boxesAmount;
+        this.defaultBoxesAmount = defaultBoxesAmount;
+        this.currentBoxesAmount = currentBoxesAmount;
         this.tags = tags;
         this.password = password;
         this.description = description;
@@ -148,6 +157,10 @@ public class Store {
         this.addressURL = addressURL;
     }
 
+    public LocalDate getCreationDate() {return creationDate;}
+
+    public void setCreationDate(LocalDate creationDate) {this.creationDate = creationDate;}
+
     public Double getPrice() {
         return price;
     }
@@ -172,12 +185,20 @@ public class Store {
         this.collectionTimeEnd = collectionTimeEnd;
     }
 
-    public Integer getBoxesAmount() {
-        return boxesAmount;
+    public Integer getDefaultBoxesAmount() {
+        return defaultBoxesAmount;
     }
 
-    public void setBoxesAmount(Integer boxesAmount) {
-        this.boxesAmount = boxesAmount;
+    public void setDefaultBoxesAmount(Integer boxesAmount) {
+        this.defaultBoxesAmount = boxesAmount;
+    }
+
+    public Integer getCurrentBoxesAmount() {
+        return currentBoxesAmount;
+    }
+
+    public void setCurrentBoxesAmount(Integer currentBoxesAmount) {
+        this.currentBoxesAmount = currentBoxesAmount;
     }
 
     public String getDescription() {
@@ -227,6 +248,20 @@ public class Store {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", addressURL='" + addressURL + '\'' +
+                ", creationDate=" + creationDate +
+                ", price=" + price +
+                ", priceWithoutDiscount=" + priceWithoutDiscount +
+                ", collectionTimeStart=" + collectionTimeStart +
+                ", collectionTimeEnd=" + collectionTimeEnd +
+                ", defaultBoxesAmount=" + defaultBoxesAmount +
+                ", currentBoxesAmount=" + currentBoxesAmount +
+                ", tags='" + tags + '\'' +
+                ", password='" + password + '\'' +
+                ", description='" + description + '\'' +
+                ", logoImage=" + Arrays.toString(logoImage) +
+                ", coverImage=" + Arrays.toString(coverImage) +
+                ", orders=" + orders +
                 '}';
     }
 }
