@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,10 +34,12 @@ public class StoreConfig {
                     "info@starbucks.com",
                     "проспект Aль-Фараби 77",
                     "https://goo.gl/maps/hB1Mhc5mvyyyNbhGA",
+                    LocalDate.now(),
                     2000.0,
                     2500.0,
-                    LocalTime.of(23, 30),
-                    LocalTime.of(23, 45),
+                    LocalTime.of(23, 55),
+                    LocalTime.of(23, 56),
+                    23,
                     23,
                     "bakery,grocery,meal",
                     new BCryptPasswordEncoder().encode("klia0494"),
@@ -49,10 +52,12 @@ public class StoreConfig {
                     "info@coffeeboom.com",
                     "проспект Aль-Фараби 140а/3",
                     "https://goo.gl/maps/BEa4kQZNSMuAshWB8",
+                    LocalDate.now(),
                     1500.0,
                     2000.0,
                     LocalTime.of(21, 30),
                     LocalTime.of(22, 00),
+                    5,
                     5,
                     "bakery,meal",
                     new BCryptPasswordEncoder().encode("klia0494"),
@@ -108,8 +113,8 @@ public class StoreConfig {
 //                    imageData("https://upload.wikimedia.org/wikipedia/de/thumb/5/52/Costa_Coffee.svg/1200px-Costa_Coffee.svg.png"),
 //                    imageData("https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1661&q=80")
 //            );
-
-
+//
+//
             repository.saveAll(
                     List.of(Starbucks, Coffeeboom)
             );
