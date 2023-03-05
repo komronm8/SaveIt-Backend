@@ -10,4 +10,8 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     @Query("SELECT s FROM Store s WHERE s.email = ?1")
     Optional<Store> findStoreByEmail(String email);
+
+    @Query("SELECT MAX(s.id) FROM Store s")
+    Integer getNumberOfStores();
+
 }
