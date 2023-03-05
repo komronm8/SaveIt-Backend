@@ -21,25 +21,25 @@ public class CustomerConfig {
                     new BCryptPasswordEncoder().encode("moefoe"),
                     "13/12/2002"
             );
-
-            Customer Alex = new Customer(
-                    "Alex",
-                    496345267583L,
-                    "Alex@gmail.com",
-                    new BCryptPasswordEncoder().encode("klia0494"),
-                    "4/10/2000"
-            );
-
-            Customer Invoker = new Customer(
-                    "Invoker",
-                    491345728453L,
-                    "sigmaMale@gmail.com",
-                    new BCryptPasswordEncoder().encode("examplepassword"),
-                    "26/05/2001"
-            );
-
+//
+//            Customer Alex = new Customer(
+//                    "Alex",
+//                    496345267583L,
+//                    "Alex@gmail.com",
+//                    new BCryptPasswordEncoder().encode("klia0494"),
+//                    "4/10/2000"
+//            );
+//
+//            Customer Invoker = new Customer(
+//                    "Invoker",
+//                    491345728453L,
+//                    "sigmaMale@gmail.com",
+//                    new BCryptPasswordEncoder().encode("examplepassword"),
+//                    "26/05/2001"
+//            );
+//
             repository.saveAll(
-                    List.of(Mike, Alex, Invoker)
+                    List.of(Mike)
             );
 
         };
