@@ -1,7 +1,6 @@
 package com.example.SaveItBackend.Order;
 
 import com.example.SaveItBackend.Customer.Customer;
-import com.example.SaveItBackend.Customer.CustomerRepository;
 import com.example.SaveItBackend.Store.Store;
 import com.example.SaveItBackend.Store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +21,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final StoreRepository storeRepository;
-    private final CustomerRepository customerRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, StoreRepository storeRepository) {
+    public OrderService(OrderRepository orderRepository, StoreRepository storeRepository) {
         this.orderRepository = orderRepository;
         this.storeRepository = storeRepository;
-        this.customerRepository = customerRepository;
     }
 
     public List<Order> getOrders(){
@@ -50,10 +47,10 @@ public class OrderService {
             throw new IllegalStateException("Order cannot be created after the collection time has started");
         }
         Store store = storeRepository.findById(storeId).get();
-        if(store.getBoxesAmount() < order.getBoxesAmount()){
+        if(store.getDefaultBoxesAmount() < order.getBoxesAmount()){
             throw new IllegalStateException("Order boxes amount is more than store boxes amount");
         }
-        store.setBoxesAmount(store.getBoxesAmount() - order.getBoxesAmount());
+        store.setDefaultBoxesAmount(store.getDefaultBoxesAmount() - order.getBoxesAmount());
         order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
@@ -106,9 +103,9 @@ public class OrderService {
     public void changeStatus(Long orderId, Integer status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalStateException("Order does not exist"));
-//        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
-//            throw new IllegalStateException("Collection time has not started yet");
-//        }
+        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
+            throw new IllegalStateException("Collection time has not started yet");
+        }
         order.setStatus(status);
     }
 }
