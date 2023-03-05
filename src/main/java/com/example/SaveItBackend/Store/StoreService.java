@@ -12,18 +12,23 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+
 
 @Service
 public class StoreService {
@@ -56,28 +61,30 @@ public class StoreService {
             throw new IllegalStateException("Email taken");
         }
         store.setPassword(new BCryptPasswordEncoder().encode(store.getPassword()));
+        store.setCreationDate(LocalDate.now());
+        store.setCurrentBoxesAmount(store.getDefaultBoxesAmount());
         storeRepository.save(store);
     }
 
-    public void deleteStore(Long store_id) {
-        boolean exists = storeRepository.existsById(store_id);
-        if(!exists){
-            throw new IllegalStateException("Customer with id " + store_id + " does not exist");
-        }
-        storeRepository.deleteById(store_id);
+    public void deleteStore(String email) {
+        Store store = getStoreByEmail(email);
+        storeRepository.deleteById(store.getId());
     }
 
     @Transactional
-    public void updateStore(Store store, String email){
-        Store str = getStoreByEmail(email);
-        byte[] logoImage = str.getLogoImage();
-        byte[] coverImage = str.getCoverImage();
-        String password = str.getPassword();
-        storeRepository.save(store);
-        store.setLogoImage(logoImage);
-        store.setCoverImage(coverImage);
-        store.setPassword(password);
-        storeRepository.save(store);
+    public void updateStore(Store givenStore, String email){
+        Store currentStore = getStoreByEmail(email);
+        currentStore.setName(givenStore.getName());
+        currentStore.setEmail(givenStore.getEmail());
+        currentStore.setAddress(givenStore.getAddress());
+        currentStore.setAddressURL(givenStore.getAddressURL());
+        currentStore.setPrice(givenStore.getPrice());
+        currentStore.setPriceWithoutDiscount(givenStore.getPriceWithoutDiscount());
+        currentStore.setCollectionTimeStart(givenStore.getCollectionTimeStart());
+        currentStore.setCollectionTimeEnd(givenStore.getCollectionTimeEnd());
+        currentStore.setDefaultBoxesAmount(givenStore.getDefaultBoxesAmount());
+        currentStore.setTags(givenStore.getTags());
+        currentStore.setDescription(givenStore.getDescription());
     }
 
     public Store getStore(Long store_id) {
@@ -135,4 +142,35 @@ public class StoreService {
             return orderRepository.findStoreOrders(store.getId(), date);
         }
     }
+
+    @Transactional
+    public Double calculatePageAmount(String email) {
+        Store store = getStoreByEmail(email);
+        double days = (double) ChronoUnit.DAYS.between(store.getCreationDate(), LocalDate.now().plusDays(1));
+        return Math.ceil(days/10);
+    }
+
+    @Transactional
+    public String calculateHistory(String email, Integer page) {
+        Store store = getStoreByEmail(email);
+        LocalDate cDate = LocalDate.now();
+        if(page <= 0){
+            throw new IllegalStateException("Page cannot be negative");
+        }
+        else{
+            return getDayHistoryContainer(store, cDate.minusDays((10L * page) - 1),
+                    cDate.plusDays(1 ).minusDays((10L * page) - 10));
+        }
+    }
+
+    public String getDayHistoryContainer(Store store, LocalDate start, LocalDate end){
+        StringBuilder result = new StringBuilder();
+        Long id = store.getId();
+        for(LocalDate date = start; date.isBefore(end); date = date.plusDays(1)){
+            String convertedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+            result.append(date).append(",").append(orderRepository.getDayHistoryDetails(id, convertedDate)).append("; ");
+        }
+        return result.toString();
+    }
+
 }
