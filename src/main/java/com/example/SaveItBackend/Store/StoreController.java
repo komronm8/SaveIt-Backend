@@ -4,6 +4,7 @@ package com.example.SaveItBackend.Store;
 import com.example.SaveItBackend.Order.Order;
 import com.example.SaveItBackend.Security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -11,6 +12,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,16 +46,6 @@ public class StoreController {
     public Store getStoreWithJWT(@RequestHeader ("AUTHORIZATION") String authHeader){
         String email = jwtUtils.extractUserName(authHeader.substring(7));
         return storeService.getStoreByEmail(email);
-    }
-
-    @GetMapping(path = "/header")
-    public ResponseEntity<Map<String, Object>> getHeader(@RequestHeader ("AUTHORIZATION") String authHeader){
-        String email = jwtUtils.extractUserName(authHeader.substring(7));
-        Store store = storeService.getStoreByEmail(email);
-        Map<String, Object> hm = new HashMap<>();
-        hm.put("Id", store.getId());
-        hm.put("Name", store.getName());
-        return new ResponseEntity<>(hm, HttpStatus.OK);
     }
 
     @PostMapping(path = "/registerStore")
@@ -98,12 +90,14 @@ public class StoreController {
         storeService.saveCoverImage(base64Image, email);
     }
 
-    @DeleteMapping(path = "{store_id}")
-    public void deleteStore(@PathVariable("store_id") Long store_id){
-        storeService.deleteStore(store_id);
+    @DeleteMapping(path = "/delete")
+    public void deleteStore(
+            @RequestHeader("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        storeService.deleteStore(email);
     }
 
-    @GetMapping(path = "dayHistory")
+    @GetMapping(path = "/dayHistory")
     public List<Order> getOrderDayHistory(
             @RequestHeader("AUTHORIZATION") String authHeader,
             @RequestParam(required = false) String date){
@@ -111,5 +105,29 @@ public class StoreController {
         return storeService.getOrderDayHistory(email, date);
     }
 
+    @GetMapping(path = "/calculatePages")
+    public Double calculatePages(
+            @RequestHeader("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        return storeService.calculatePageAmount(email);
+    }
+
+    @GetMapping(path = "/calculateHistory")
+    public String calculateHistory(
+            @RequestHeader("AUTHORIZATION") String authHeader,
+            @RequestParam Integer page){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        return storeService.calculateHistory(email, page);
+    }
+
+    @GetMapping(path = "/header")
+    public ResponseEntity<Map<String, Object>> getHeader(@RequestHeader ("AUTHORIZATION") String authHeader){
+        String email = jwtUtils.extractUserName(authHeader.substring(7));
+        Store store = storeService.getStoreByEmail(email);
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("Id", store.getId());
+        hm.put("Name", store.getName());
+        return new ResponseEntity<>(hm, HttpStatus.OK);
+    }
 
 }
