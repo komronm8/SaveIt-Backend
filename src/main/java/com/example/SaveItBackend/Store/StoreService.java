@@ -5,6 +5,7 @@ import com.example.SaveItBackend.Order.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -167,9 +168,18 @@ public class StoreService {
     public String getDayHistoryContainer(Store store, LocalDate start, LocalDate end){
         StringBuilder result = new StringBuilder();
         Long id = store.getId();
-        for(LocalDate date = start; date.isBefore(end); date = date.plusDays(1)){
-            String convertedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
-            result.append(date).append(",").append(orderRepository.getDayHistoryDetails(id, convertedDate)).append("; ");
+        LocalDate creationDate = store.getCreationDate();
+        if(creationDate.isAfter(start)){
+            for(LocalDate date = creationDate; date.isBefore(end); date = date.plusDays(1)){
+                String convertedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+                result.append(date).append(",").append(orderRepository.getDayHistoryDetails(id, convertedDate)).append("; ");
+            }
+        }
+        else{
+            for(LocalDate date = start; date.isBefore(end); date = date.plusDays(1)){
+                String convertedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+                result.append(date).append(",").append(orderRepository.getDayHistoryDetails(id, convertedDate)).append("; ");
+            }
         }
         return result.toString();
     }
