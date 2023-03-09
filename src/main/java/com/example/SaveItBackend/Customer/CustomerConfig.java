@@ -16,7 +16,7 @@ public class CustomerConfig {
         return args -> {
             Customer Mike = new Customer(
                     "Mike",
-                    49695267583L,
+                    "049695267583",
                     "Mike@gmail.com",
                     new BCryptPasswordEncoder().encode("moefoe"),
                     "13/12/2002"

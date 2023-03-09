@@ -23,7 +23,7 @@ public class Customer {
     )
     private Long id;
     private String name;
-    private Long number;
+    private String number;
     private String email;
     private String password;
     private String dob;
@@ -34,7 +34,7 @@ public class Customer {
     private Set<Order> orders;
 
     public Customer(){}
-    public Customer(Long id, String name, Long number, String email, String password, String dob) {
+    public Customer(Long id, String name, String number, String email, String password, String dob) {
         this.id = id;
         this.name = name;
         this.number = number;
@@ -43,7 +43,7 @@ public class Customer {
         this.dob = dob;
     }
 
-    public Customer(String name, Long number, String email, String password, String dob) {
+    public Customer(String name, String number, String email, String password, String dob) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -59,7 +59,7 @@ public class Customer {
         return name;
     }
 
-    public Long getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -83,7 +83,7 @@ public class Customer {
         this.name = name;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
