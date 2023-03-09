@@ -47,7 +47,7 @@ public class OrderService {
             throw new IllegalStateException("Order cannot be created after the collection time has started");
         }
         Store store = storeRepository.findById(storeId).get();
-        if(store.getDefaultBoxesAmount() < order.getBoxesAmount()){
+        if(store.getCurrentBoxesAmount() < order.getBoxesAmount()){
             throw new IllegalStateException("Order boxes amount is more than store boxes amount");
         }
         store.setCurrentBoxesAmount(store.getCurrentBoxesAmount() - order.getBoxesAmount());
