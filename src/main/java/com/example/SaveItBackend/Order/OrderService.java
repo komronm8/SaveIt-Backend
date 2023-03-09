@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
@@ -43,7 +44,7 @@ public class OrderService {
         if(!storeExists){
             throw new IllegalStateException("Store with id " + storeId + " does not exist");
         }
-        if(LocalTime.now().isAfter(storeRepository.getReferenceById(storeId).getCollectionTimeStart())){
+        if(LocalTime.now(ZoneId.of("Europe/Berlin")).isAfter(storeRepository.getReferenceById(storeId).getCollectionTimeStart())){
             throw new IllegalStateException("Order cannot be created after the collection time has started");
         }
         Store store = storeRepository.findById(storeId).get();
@@ -58,7 +59,7 @@ public class OrderService {
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
         order.setTotalPrice(order.getPricePerBox()*order.getBoxesAmount());
         order.setPriceWithoutDiscount(storeRepository.getReferenceById(storeId).getPriceWithoutDiscount()*order.getBoxesAmount());
-        order.setOrderTime(LocalTime.now());
+        order.setOrderTime(LocalTime.now(ZoneId.of("Europe/Berlin")));
         orderRepository.save(order);
         new java.util.Timer().schedule(
                 new java.util.TimerTask(){
