@@ -50,7 +50,7 @@ public class OrderService {
         if(store.getDefaultBoxesAmount() < order.getBoxesAmount()){
             throw new IllegalStateException("Order boxes amount is more than store boxes amount");
         }
-        store.setDefaultBoxesAmount(store.getDefaultBoxesAmount() - order.getBoxesAmount());
+        store.setCurrentBoxesAmount(store.getCurrentBoxesAmount() - order.getBoxesAmount());
         order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
         order.setOrderDate(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
