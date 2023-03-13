@@ -54,7 +54,7 @@ public class OrderService {
         store.setCurrentBoxesAmount(store.getCurrentBoxesAmount() - order.getBoxesAmount());
         order.setCustomer(customer);
         order.setOrderNumber(getOrderNumber());
-        order.setOrderDate(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
+        order.setOrderDate(LocalDate.now(ZoneId.of("Europe/Berlin")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
         order.setStatus(0);
         order.setPricePerBox(storeRepository.getReferenceById(storeId).getPrice());
         order.setTotalPrice(order.getPricePerBox()*order.getBoxesAmount());
@@ -104,7 +104,7 @@ public class OrderService {
     public void changeStatus(Long orderId, Integer status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalStateException("Order does not exist"));
-        if(LocalTime.now().isBefore(order.getStore().getCollectionTimeStart())){
+        if(LocalTime.now(ZoneId.of("Europe/Berlin")).isBefore(order.getStore().getCollectionTimeStart())){
             throw new IllegalStateException("Collection time has not started yet");
         }
         order.setStatus(status);
