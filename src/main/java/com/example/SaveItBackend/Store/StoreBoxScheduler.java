@@ -18,7 +18,7 @@ public class StoreBoxScheduler {
     }
 
     @Transactional
-    @Scheduled(cron = "0 0 * * * *" )
+    @Scheduled(cron = "0 0 0 * * *" )
     public void updateBoxAmounts(){
         Integer numberOfStores = storeRepository.getNumberOfStores();
         for(int i = 1; i <= numberOfStores; i++){
