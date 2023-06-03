@@ -18,12 +18,11 @@ public class StoreBoxScheduler {
     }
 
     @Transactional
-    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Almaty")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Almaty" )
     public void updateBoxAmounts(){
-        Integer numberOfStores = storeRepository.getNumberOfStores();
-        for(int i = 1; i <= numberOfStores; i++){
-            Store store = storeRepository.getReferenceById((long) i);
+        for(Store store: storeRepository.findAll()){
             store.setCurrentBoxesAmount(store.getDefaultBoxesAmount());
+            storeRepository.save(store);
         }
     }
 
