@@ -14,13 +14,13 @@ public class CustomerConfig {
     @Bean
     CommandLineRunner customerCommandLineRunner(CustomerRepository repository){
         return args -> {
-//            Customer Mike = new Customer(
-//                    "Mike",
-//                    "049695267583",
-//                    "Mike@gmail.com",
-//                    new BCryptPasswordEncoder().encode("moefoe"),
-//                    "13/12/2002"
-//            );
+            Customer Mike = new Customer(
+                    "Mike",
+                    "049695267583",
+                    "komron.ba@gmail.com",
+                    new BCryptPasswordEncoder().encode("moefoe"),
+                    "13/12/2002"
+            );
 //
 //            Customer Alex = new Customer(
 //                    "Alex",
@@ -38,9 +38,9 @@ public class CustomerConfig {
 //                    "26/05/2001"
 //            );
 //
-//            repository.saveAll(
-//                    List.of(Mike)
-//            );
+            repository.saveAll(
+                    List.of(Mike)
+            );
 
         };
     }

@@ -46,8 +46,8 @@ public class StoreConfig {
                     LocalDate.now(),
                     2000.0,
                     2500.0,
-                    LocalTime.of(23, 55),
-                    LocalTime.of(23, 56),
+                    LocalTime.of(23, 59),
+                    LocalTime.of(23, 59),
                     23,
                     23,
                     "bakery,grocery,meal",
@@ -58,7 +58,7 @@ public class StoreConfig {
             );
             Store Coffeeboom = new Store(
                     "Coffeeboom",
-                    "info@coffeeboom.com",
+                    "asanali.uzakov@mail.ru",
                     "проспект Aль-Фараби 140а/3",
                     "https://goo.gl/maps/BEa4kQZNSMuAshWB8",
                     LocalDate.now(),
