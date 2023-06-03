@@ -14,17 +14,17 @@ public class CustomerConfig {
     @Bean
     CommandLineRunner customerCommandLineRunner(CustomerRepository repository){
         return args -> {
-            Customer Mike = new Customer(
-                    "Mike",
-                    "049695267583",
-                    "Mike@gmail.com",
-                    new BCryptPasswordEncoder().encode("moefoe"),
-                    "13/12/2002"
-            );
+//            Customer Mike = new Customer(
+//                    "Mike",
+//                    "049695267583",
+//                    "Mike@gmail.com",
+//                    new BCryptPasswordEncoder().encode("moefoe"),
+//                    "13/12/2002"
+//            );
 //
 //            Customer Alex = new Customer(
 //                    "Alex",
-//                    496345267583L,
+//                    "496345267583L",
 //                    "Alex@gmail.com",
 //                    new BCryptPasswordEncoder().encode("klia0494"),
 //                    "4/10/2000"
@@ -32,15 +32,15 @@ public class CustomerConfig {
 //
 //            Customer Invoker = new Customer(
 //                    "Invoker",
-//                    491345728453L,
+//                    "491345728453",
 //                    "sigmaMale@gmail.com",
 //                    new BCryptPasswordEncoder().encode("examplepassword"),
 //                    "26/05/2001"
 //            );
 //
-            repository.saveAll(
-                    List.of(Mike)
-            );
+//            repository.saveAll(
+//                    List.of(Mike)
+//            );
 
         };
     }

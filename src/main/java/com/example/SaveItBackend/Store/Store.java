@@ -257,10 +257,7 @@ public class Store {
                 ", defaultBoxesAmount=" + defaultBoxesAmount +
                 ", currentBoxesAmount=" + currentBoxesAmount +
                 ", tags='" + tags + '\'' +
-                ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
-                ", logoImage=" + Arrays.toString(logoImage) +
-                ", coverImage=" + Arrays.toString(coverImage) +
                 ", orders=" + orders +
                 '}';
     }
