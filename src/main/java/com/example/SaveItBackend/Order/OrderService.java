@@ -23,10 +23,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StoreRepository storeRepository;
 
+    private final EmailSenderService emailSenderService;
+
     @Autowired
-    public OrderService(OrderRepository orderRepository, StoreRepository storeRepository) {
+    public OrderService(OrderRepository orderRepository, StoreRepository storeRepository, EmailSenderService emailSenderService) {
         this.orderRepository = orderRepository;
         this.storeRepository = storeRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     public List<Order> getOrders(){
@@ -72,6 +75,11 @@ public class OrderService {
                 Duration.between(order.getOrderTime(), storeRepository.getReferenceById(storeId).getCollectionTimeEnd())
                         .toMillis()
         );
+        emailSenderService.sendEmail(store.getEmail(),
+                "New Order: " + order.getOrderNumber(),
+                "The customer " + customer.getName() + " has ordered " + order.getBoxesAmount() + " boxes on " +
+                        order.getOrderDate() + " at " + order.getOrderTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        + ".The order number is " + order.getOrderNumber() + ".");
     }
 
     @Transactional
