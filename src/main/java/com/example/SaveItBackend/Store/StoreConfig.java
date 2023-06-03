@@ -40,7 +40,7 @@ public class StoreConfig {
         return args -> {
             Store Starbucks = new Store(
                     "Starbucks",
-                    "info@starbucks.com",
+                    "komron.ba@gmail.com",
                     "проспект Aль-Фараби 77",
                     "https://goo.gl/maps/hB1Mhc5mvyyyNbhGA",
                     LocalDate.now(),
