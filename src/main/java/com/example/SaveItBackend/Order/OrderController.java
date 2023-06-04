@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @CrossOrigin
@@ -45,7 +46,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> createOrder(
             @RequestHeader("AUTHORIZATION") String authHeader,
-            @RequestBody Order order){
+            @RequestBody Order order) throws MessagingException {
         String email = jwtUtils.extractUserName(authHeader.substring(7));
         Customer customer = customerService.getCustomerByEmail(email);
         orderService.createOrder(order, customer);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -41,7 +42,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(Order order, Customer customer) {
+    public void createOrder(Order order, Customer customer) throws MessagingException {
         Long storeId = order.getStore().getId();
         boolean storeExists = storeRepository.existsById(storeId);
         if(!storeExists){
